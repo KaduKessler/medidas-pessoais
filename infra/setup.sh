@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_URL="https://github.com/kadukessler/medidas-pessoais.git"
-APP_DIR="$HOME/medidas-pessoais"
+APP_DIR="/data/projetos/medidas-pessoais"
 
 echo "[1/4] Atualizando sistema..."
 sudo dnf update -y
