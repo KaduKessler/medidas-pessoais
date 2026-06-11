@@ -8,6 +8,9 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 COPY . .
 RUN pnpm run build
 
