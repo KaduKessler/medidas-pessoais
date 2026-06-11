@@ -8,6 +8,8 @@ on:
       - 'frontend/**'
       - 'docker-compose*.yml'
       - '.github/workflows/**'
+    tags:
+      - 'v*'
   pull_request:
     branches: [main]
     paths:
@@ -130,7 +132,7 @@ jobs:
     name: Build e Push Docker
     runs-on: ubuntu-24.04-arm
     needs: [test, build]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: read
       packages: write
@@ -147,15 +149,33 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Gerar tags (backend)
+        id: meta-backend
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.BACKEND_IMAGE }}
+          tags: |
+            type=raw,value=${{ github.sha }}
+            type=ref,event=tag
+            type=raw,value=latest,enable={{is_default_branch}}
+
       - name: Build e push (backend)
         uses: docker/build-push-action@v6
         with:
           context: ./backend
           platforms: linux/arm64
           push: true
+          tags: ${{ steps.meta-backend.outputs.tags }}
+
+      - name: Gerar tags (frontend)
+        id: meta-frontend
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.FRONTEND_IMAGE }}
           tags: |
-            ${{ env.BACKEND_IMAGE }}:${{ github.sha }}
-            ${{ env.BACKEND_IMAGE }}:latest
+            type=raw,value=${{ github.sha }}
+            type=ref,event=tag
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build e push (frontend)
         uses: docker/build-push-action@v6
@@ -165,9 +185,25 @@ jobs:
           push: true
           build-args: |
             VITE_API_URL=${{ secrets.VITE_API_URL }}
-          tags: |
-            ${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
-            ${{ env.FRONTEND_IMAGE }}:latest
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+
+      - name: Limpar versões antigas (backend)
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: medidas-pessoais/backend
+          package-type: container
+          min-versions-to-keep: 3
+          ignore-versions: ^(latest|v.*)$
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Limpar versões antigas (frontend)
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: medidas-pessoais/frontend
+          package-type: container
+          min-versions-to-keep: 3
+          ignore-versions: ^(latest|v.*)$
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     name: Deploy
