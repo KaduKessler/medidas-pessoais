@@ -12,7 +12,9 @@
 Sistema web para registro centralizado de medidas corporais. O consumidor cadastra suas medidas uma única vez e recebe um código de acesso no formato **MED-XXXXX**. Lojas integradas consultam esse código via API pública para preencher automaticamente campos de tamanho — sem que o consumidor precise informar suas medidas em cada loja.
 
 **Aplicação:** <https://medidas.kadukessler.com> ⚠️ WIP  
-**Documentação da API:** <https://api.medidas.kadukessler.com/reference> ⚠️ WIP
+**Documentação da API:** <https://api-medidas.kadukessler.com/reference> ⚠️ WIP
+
+> Desenvolvido para as disciplinas **DevOps na Prática** e **Disciplina Integradora de Desenvolvimento de Projetos** da [PUCRS](https://www.pucrs.br).
 
 ## Stack
 
