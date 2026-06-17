@@ -22,7 +22,7 @@ BACKEND_PORT=$(grep -E '^BACKEND_PORT=' "$APP_DIR/.env" | cut -d= -f2)
 BACKEND_PORT="${BACKEND_PORT:-3000}"
 
 for i in 1 2 3 4 5; do
-  if curl -sf "http://localhost:$BACKEND_PORT/reference" > /dev/null; then
+  if curl -sf "http://localhost:$BACKEND_PORT/health" > /dev/null; then
     echo "Deploy concluido. Backend respondendo na porta $BACKEND_PORT."
     exit 0
   fi
