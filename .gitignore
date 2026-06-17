@@ -17,5 +17,18 @@ build
 .DS_Store
 Thumbs.db
 
+# editores/IDE
+.vscode/
+.idea/
+*.swp
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# cobertura de testes
+coverage/
+
 # pasta pessoal do desenvolvedor
 dev/
