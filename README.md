@@ -35,6 +35,7 @@ Sistema web para registro centralizado de medidas corporais. O consumidor cadast
 | GET | /codigo | JWT |
 | GET | /api/medidas/:codigo | — |
 | DELETE | /usuarios/me | JWT |
+| GET | /health | — |
 
 ## Estrutura
 
