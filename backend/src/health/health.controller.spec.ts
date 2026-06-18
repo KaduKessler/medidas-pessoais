@@ -1,4 +1,4 @@
-import { ServiceUnavailableException } from '@nestjs/common';
+import { Logger, ServiceUnavailableException } from '@nestjs/common';
 import { TerminusModule } from '@nestjs/terminus';
 import { Test, type TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
@@ -18,6 +18,15 @@ describe('HealthController', () => {
     }).compile();
 
     controller = module.get(HealthController);
+
+    // terminus loga ERROR no console quando um indicator falha (esperado/proposital).
+    // Silenciado aqui só pra não poluir o output do teste — o comportamento real
+    // continua sendo exercitado, só o console.error fica mudo.
+    jest.spyOn(Logger.prototype, 'error').mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it('retorna status ok quando o banco responde', async () => {
@@ -32,17 +41,20 @@ describe('HealthController', () => {
   it('lança 503 com status error quando o banco falha', async () => {
     prisma.$queryRaw.mockRejectedValue(new Error('connection refused'));
 
-    await expect(controller.check()).rejects.toThrow(ServiceUnavailableException);
-
+    let erroCapturado: ServiceUnavailableException | undefined;
     try {
       await controller.check();
     } catch (error) {
-      const response = (error as ServiceUnavailableException).getResponse() as {
-        status: string;
-        details: { database: { status: string } };
-      };
-      expect(response.status).toBe('error');
-      expect(response.details.database.status).toBe('down');
+      erroCapturado = error as ServiceUnavailableException;
     }
+
+    expect(erroCapturado).toBeInstanceOf(ServiceUnavailableException);
+
+    const response = erroCapturado?.getResponse() as {
+      status: string;
+      details: { database: { status: string } };
+    };
+    expect(response.status).toBe('error');
+    expect(response.details.database.status).toBe('down');
   });
 });
