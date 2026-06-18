@@ -3,10 +3,22 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { apiReference } from '@scalar/nestjs-api-reference';
+import type { NextFunction, Request, Response } from 'express';
+import helmet from 'helmet';
+import { Logger } from 'nestjs-pino';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+
+  app.useLogger(app.get(Logger));
+
+  // CSP fica off só em /reference: Scalar injeta script/CSS inline e CSP padrão bloquearia a página
+  const helmetWithCsp = helmet();
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (req.path.startsWith('/reference')) return next();
+    return helmetWithCsp(req, res, next);
+  });
 
   app.enableCors({ origin: process.env.FRONTEND_URL ?? '*' });
 
