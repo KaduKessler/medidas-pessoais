@@ -24,6 +24,9 @@
     "formatter": {
       "trailingCommas": "all",
       "quoteStyle": "single"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   },
   "files": {
