@@ -1,6 +1,6 @@
 // biome-ignore-all lint/style/useImportType: classes injetadas via DI do Nest precisam de import de valor (reflect-metadata)
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HealthCheck, HealthCheckService, HealthIndicatorService } from '@nestjs/terminus';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -15,6 +15,12 @@ export class HealthController {
 
   @Get()
   @HealthCheck()
+  @ApiOperation({
+    summary: 'Verifica saúde da aplicação',
+    description: 'Checa se a API está respondendo e se a conexão com o banco de dados está ativa.',
+  })
+  @ApiResponse({ status: 200, description: 'Aplicação e banco de dados funcionando.' })
+  @ApiResponse({ status: 503, description: 'Banco de dados inacessível.' })
   check() {
     return this.health.check([
       async () => {

@@ -37,7 +37,12 @@ async function bootstrap() {
     .setTitle('Medidas Pessoais API')
     .setDescription('API para registro e consulta de medidas corporais')
     .setVersion('1.0')
-    .addBearerAuth();
+    .addBearerAuth()
+    .addTag('health', 'Monitoramento e diagnóstico da aplicação')
+    .addTag('auth', 'Autenticação e emissão de token JWT')
+    .addTag('usuarios', 'Gerenciamento de conta do usuário')
+    .addTag('medidas', 'Cadastro e consulta de medidas corporais')
+    .addTag('codigo-acesso', 'Geração e consulta do código de acesso (MED-XXXXX)');
 
   if (isDev) {
     builder.addServer(`http://localhost:${port}`, 'Development');
