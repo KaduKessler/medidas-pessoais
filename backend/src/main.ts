@@ -42,7 +42,8 @@ async function bootstrap() {
     .addTag('auth', 'Autenticação e emissão de token JWT')
     .addTag('usuarios', 'Gerenciamento de conta do usuário')
     .addTag('medidas', 'Cadastro e consulta de medidas corporais')
-    .addTag('codigo-acesso', 'Geração e consulta do código de acesso (MED-XXXXX)');
+    .addTag('codigo-acesso', 'Geração e consulta do código de acesso (MED-XXXXX)')
+    .addTag('api-publica', 'Consulta de medidas pelo código de acesso, sem autenticação');
 
   if (isDev) {
     builder.addServer(`http://localhost:${port}`, 'Development');
