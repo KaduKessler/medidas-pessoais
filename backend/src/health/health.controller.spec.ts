@@ -20,7 +20,7 @@ describe('HealthController', () => {
     controller = module.get(HealthController);
 
     // terminus loga ERROR no console quando um indicator falha (esperado/proposital).
-    // Silenciado aqui só pra não poluir o output do teste — o comportamento real
+    // Silenciado aqui só pra não poluir o output do teste. O comportamento real
     // continua sendo exercitado, só o console.error fica mudo.
     jest.spyOn(Logger.prototype, 'error').mockImplementation(() => undefined);
   });

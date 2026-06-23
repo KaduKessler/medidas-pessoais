@@ -9,7 +9,7 @@
 
 ## Sobre
 
-Sistema web para registro centralizado de medidas corporais. O consumidor cadastra suas medidas uma única vez e recebe um código de acesso no formato **MED-XXXXX**. Lojas integradas consultam esse código via API pública para preencher automaticamente campos de tamanho — sem que o consumidor precise informar suas medidas em cada loja.
+Sistema web para registro centralizado de medidas corporais. O consumidor cadastra suas medidas uma única vez e recebe um código de acesso no formato **MED-XXXXX**. Lojas integradas consultam esse código via API pública para preencher automaticamente campos de tamanho - sem que o consumidor precise informar suas medidas em cada loja.
 
 **Aplicação:** <https://medidas.kadukessler.com> ⚠️ WIP  
 **Documentação da API:** <https://api-medidas.kadukessler.com/reference> ⚠️ WIP  
@@ -27,16 +27,16 @@ Sistema web para registro centralizado de medidas corporais. O consumidor cadast
 
 | Método | Rota | Auth |
 |---|---|---|
-| POST | /auth/register | — |
-| POST | /auth/login | — |
+| POST | /auth/register | - |
+| POST | /auth/login | - |
 | GET | /medidas | JWT |
 | POST | /medidas | JWT |
 | PATCH | /medidas | JWT |
 | DELETE | /medidas | JWT |
 | GET | /codigo-acesso | JWT |
-| GET | /api/medidas/:codigo | — |
+| GET | /api/medidas/:codigo | - |
 | DELETE | /usuarios/me | JWT |
-| GET | /health | — |
+| GET | /health | - |
 
 ## Estrutura
 
@@ -89,7 +89,7 @@ Frontend em `http://localhost:5173`
 | `DATABASE_URL` | Connection string do PostgreSQL | ✅ |
 | `JWT_SECRET` | Chave secreta para assinar tokens JWT | ✅ |
 | `JWT_EXPIRES_IN` | Expiração do token (ex: `7d`) | ✅ |
-| `PORT` | Porta do servidor (padrão: `3000`) | — |
+| `PORT` | Porta do servidor (padrão: `3000`) | - |
 
 ### Frontend (`frontend/.env`)
 
