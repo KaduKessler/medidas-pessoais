@@ -11,8 +11,8 @@
 
 Sistema web para registro centralizado de medidas corporais. O consumidor cadastra suas medidas uma única vez e recebe um código de acesso no formato **MED-XXXXX**. Lojas integradas consultam esse código via API pública para preencher automaticamente campos de tamanho - sem que o consumidor precise informar suas medidas em cada loja.
 
-**Aplicação:** <https://medidas.kadukessler.com> ⚠️ WIP  
-**Documentação da API:** <https://api-medidas.kadukessler.com/reference> ⚠️ WIP  
+**Aplicação:** <https://medidas.kadukessler.com>  
+**Documentação da API:** <https://api-medidas.kadukessler.com/reference>  
 **Status dos serviços:** <https://status.kadukessler.com/status/medidas-pessoais>
 
 > Desenvolvido para as disciplinas **DevOps na Prática** e **Disciplina Integradora de Desenvolvimento de Projetos** da [PUCRS](https://www.pucrs.br).
@@ -36,13 +36,25 @@ Sistema web para registro centralizado de medidas corporais. O consumidor cadast
 | `/codigo-acesso` | Código em destaque, copiar, link pra simulação de loja |
 | `/loja` | Simulação de loja parceira consumindo a API pública (rota pública, sem login) |
 
+## Protótipo
+
+<table>
+<tr>
+<td><img src="docs/prototipo-figma/01-cadastro-de-conta.png" width="180" alt="Tela de cadastro" /></td>
+<td><img src="docs/prototipo-figma/02-login.png" width="180" alt="Tela de login" /></td>
+<td><img src="docs/prototipo-figma/03-painel-do-usuario.png" width="180" alt="Painel do usuário" /></td>
+<td><img src="docs/prototipo-figma/04-formulario-de-medidas.png" width="180" alt="Formulário de medidas" /></td>
+<td><img src="docs/prototipo-figma/05-codigo-de-acesso.png" width="180" alt="Tela de código de acesso" /></td>
+</tr>
+</table>
+
 ## Stack
 
 **Backend:** NestJS · Prisma · PostgreSQL · JWT · Passport · Swagger + Scalar  
 **Frontend:** React · Vite · TypeScript · Zod  
 **Infra:** Docker · GitHub Actions · Oracle Cloud ARM
 
-## Endpoints principais ⚠️ WIP
+## Endpoints principais
 
 | Método | Rota | Auth |
 |---|---|---|
