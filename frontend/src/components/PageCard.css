@@ -1,0 +1,102 @@
+.page-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: 0 20px 40px -12px rgba(30, 35, 88, 0.18);
+  animation: page-enter 0.35s ease both;
+}
+
+@media (min-width: 768px) {
+  .page-card {
+    max-width: 520px;
+  }
+
+  .page-card-header {
+    padding: 36px 40px 30px;
+  }
+
+  .page-card-body {
+    padding: 36px 40px;
+  }
+}
+
+.page-card-header {
+  position: relative;
+  background: var(--color-header);
+  padding: 28px 24px 24px;
+  overflow: hidden;
+}
+
+.page-card-header h1 {
+  position: relative;
+  margin: 0;
+  color: #ffffff;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.page-card-header p {
+  position: relative;
+  margin: 4px 0 0;
+  color: var(--color-text-label-dark);
+  font-size: 14px;
+}
+
+.page-card-header-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--color-header-light);
+}
+
+.page-card-header-circle-top {
+  top: -30px;
+  left: -30px;
+  width: 120px;
+  height: 120px;
+}
+
+.page-card-header-circle-bottom {
+  top: 30px;
+  right: -40px;
+  width: 80px;
+  height: 80px;
+}
+
+.page-card-logout {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  line-height: 0;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: background-color 0.15s ease;
+}
+
+.page-card-logout svg {
+  display: block;
+}
+
+.page-card-logout:active {
+  transform: translateY(-50%) scale(0.88);
+}
+
+.page-card-logout:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.page-card-body {
+  padding: 24px;
+}

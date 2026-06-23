@@ -1,0 +1,19 @@
+.spinner-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+  color: var(--color-primary);
+}
+
+.spinner-icon {
+  animation: spinner-rotate 0.8s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
