@@ -67,21 +67,31 @@ describe('AuthService', () => {
 
     it('lança UnauthorizedException se a senha está errada', async () => {
       const senhaHash = await bcrypt.hash('senhacerta', 10);
-      prisma.usuario.findUnique.mockResolvedValue({ id: '1', email: 'a@a.com', senhaHash });
+      prisma.usuario.findUnique.mockResolvedValue({
+        id: '1',
+        nome: 'Teste',
+        email: 'a@a.com',
+        senhaHash,
+      });
 
       await expect(service.login({ email: 'a@a.com', senha: 'senhaerrada' })).rejects.toThrow(
         UnauthorizedException,
       );
     });
 
-    it('retorna accessToken quando a senha está correta', async () => {
+    it('retorna accessToken e nome quando a senha está correta', async () => {
       const senhaHash = await bcrypt.hash('senhacerta', 10);
-      prisma.usuario.findUnique.mockResolvedValue({ id: '1', email: 'a@a.com', senhaHash });
+      prisma.usuario.findUnique.mockResolvedValue({
+        id: '1',
+        nome: 'Teste',
+        email: 'a@a.com',
+        senhaHash,
+      });
       jwt.signAsync.mockResolvedValue('token-fake');
 
       const result = await service.login({ email: 'a@a.com', senha: 'senhacerta' });
 
-      expect(result).toEqual({ accessToken: 'token-fake' });
+      expect(result).toEqual({ accessToken: 'token-fake', nome: 'Teste' });
       expect(jwt.signAsync).toHaveBeenCalledWith({ sub: '1', email: 'a@a.com' });
     });
   });

@@ -33,6 +33,6 @@ export class AuthService {
     if (!senhaValida) throw new UnauthorizedException('Credenciais inválidas');
 
     const accessToken = await this.jwt.signAsync({ sub: usuario.id, email: usuario.email });
-    return { accessToken };
+    return { accessToken, nome: usuario.nome };
   }
 }
