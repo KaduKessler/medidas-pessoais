@@ -17,6 +17,25 @@ Sistema web para registro centralizado de medidas corporais. O consumidor cadast
 
 > Desenvolvido para as disciplinas **DevOps na Prática** e **Disciplina Integradora de Desenvolvimento de Projetos** da [PUCRS](https://www.pucrs.br).
 
+## Funcionalidades
+
+- **Conta:** cadastro, login (JWT), exclusão de conta com remoção permanente de todos os dados (LGPD)
+- **Medidas:** cadastro, edição e exclusão de busto, tórax, cintura, quadril, coxa e calçado
+- **Código de acesso:** gerado automaticamente ao cadastrar a primeira medida, reativado (não recriado) se as medidas forem excluídas e cadastradas de novo
+- **API pública:** lojas consultam o código sem autenticação para preencher tamanhos automaticamente
+- **Simulação de loja parceira** (`/loja`): demonstra esse fluxo na prática. Digite um código gerado no app e veja um produto de exemplo com o tamanho já recomendado a partir das medidas do cliente
+
+## Telas (frontend)
+
+| Rota | Descrição |
+|---|---|
+| `/cadastro` | Criar conta |
+| `/login` | Entrar |
+| `/painel` | Medidas, código de acesso, editar/excluir |
+| `/medidas/editar` | Cadastrar ou editar medidas |
+| `/codigo-acesso` | Código em destaque, copiar, link pra simulação de loja |
+| `/loja` | Simulação de loja parceira consumindo a API pública (rota pública, sem login) |
+
 ## Stack
 
 **Backend:** NestJS · Prisma · PostgreSQL · JWT · Passport · Swagger + Scalar  
