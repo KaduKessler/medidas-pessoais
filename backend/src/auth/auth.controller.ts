@@ -1,6 +1,7 @@
 // biome-ignore-all lint/style/useImportType: DTO precisa de import de valor, ValidationPipe transforma @Body() na classe via reflect-metadata
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -11,6 +12,9 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  // Limite mais restrito que o global (60/min): evita automação de criação de
+  // contas em massa.
+  @Throttle({ default: { limit: 10, ttl: 60000 } })
   @ApiOperation({ summary: 'Cria uma nova conta de usuário' })
   @ApiResponse({ status: 201, description: 'Conta criada com sucesso.' })
   @ApiResponse({ status: 409, description: 'E-mail já cadastrado.' })
@@ -20,6 +24,9 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
+  // Limite mais restrito que o global (60/min): login é alvo clássico de
+  // força bruta e credential stuffing.
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @ApiOperation({ summary: 'Autentica o usuário e retorna um token JWT' })
   @ApiResponse({ status: 200, description: 'Login bem-sucedido, retorna accessToken e nome.' })
   @ApiResponse({ status: 401, description: 'Credenciais inválidas.' })
