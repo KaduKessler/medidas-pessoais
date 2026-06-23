@@ -6,6 +6,7 @@ import { CodigoAcessoPage } from './pages/CodigoAcessoPage';
 import { FormularioMedidasPage } from './pages/FormularioMedidasPage';
 import { LoginPage } from './pages/LoginPage';
 import { LojaDemoPage } from './pages/LojaDemoPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 import { PainelPage } from './pages/PainelPage';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
