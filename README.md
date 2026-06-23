@@ -25,6 +25,16 @@ Sistema web para registro centralizado de medidas corporais. O consumidor cadast
 - **API pública:** lojas consultam o código sem autenticação para preencher tamanhos automaticamente
 - **Simulação de loja parceira** (`/loja`): demonstra esse fluxo na prática. Digite um código gerado no app e veja um produto de exemplo com o tamanho já recomendado a partir das medidas do cliente
 
+## Fluxo de uso
+
+```mermaid
+flowchart LR
+    A[Cliente cadastra medidas] --> B[Sistema gera código MED-XXXXX]
+    B --> C[Cliente compartilha o código com a loja]
+    C --> D["Loja consulta GET /api/medidas/:codigo"]
+    D --> E[Tamanho preenchido automaticamente]
+```
+
 ## Telas (frontend)
 
 | Rota | Descrição |
@@ -68,6 +78,43 @@ Sistema web para registro centralizado de medidas corporais. O consumidor cadast
 | GET | /api/medidas/:codigo | - |
 | DELETE | /usuarios/me | JWT |
 | GET | /health | - |
+
+## Modelo de dados
+
+```mermaid
+erDiagram
+    Usuario ||--o| Medidas : possui
+    Usuario ||--o| CodigoAcesso : possui
+
+    Usuario {
+        string id PK
+        string nome
+        string email UK
+        string senhaHash
+        datetime criadoEm
+    }
+    Medidas {
+        string id PK
+        string usuarioId FK
+        decimal busto
+        decimal torax
+        decimal cintura
+        decimal quadril
+        decimal coxa
+        decimal calcado
+        datetime criadoEm
+        datetime atualizadoEm
+    }
+    CodigoAcesso {
+        string id PK
+        string usuarioId FK
+        string codigo UK
+        boolean ativo
+        datetime criadoEm
+    }
+```
+
+Relações 1:1 com `onDelete: Cascade`. Excluir o usuário remove Medidas e CodigoAcesso junto (LGPD, RF11).
 
 ## Estrutura
 
